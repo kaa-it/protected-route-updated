@@ -1,4 +1,4 @@
-import { setUser } from "./user";
+import { setUser, setAuthChecked } from "./user";
 import { api } from "../utils/api";
 
 export const getUser = () => {
@@ -15,6 +15,23 @@ export const login = () => {
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch(setUser(res.user));
+      dispatch(setAuthChecked(true));
     });
   };
+};
+
+export const checkUserAuth = () => {
+    return (dispatch) => {
+        if (localStorage.getItem("accessToken")) {
+            dispatch(getUser())
+              .catch(() => {
+                  localStorage.removeItem("accessToken");
+                  localStorage.removeItem("refreshToken");
+                  dispatch(setUser({}));
+               })
+              .finally(() => dispatch(setAuthChecked(true)));
+        } else {
+            dispatch(setAuthChecked(true));
+        }
+    };
 };

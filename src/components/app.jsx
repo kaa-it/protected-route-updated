@@ -2,8 +2,17 @@ import {Route, Routes} from "react-router-dom";
 import {Home} from "../pages/home";
 import {Login} from "../pages/login";
 import {Profile} from "../pages/profile";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { checkUserAuth } from "../services/action";
 
 function App() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(checkUserAuth());
+    }, []);
+
     return (
         <div className="app">
             <Routes>
