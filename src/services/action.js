@@ -1,29 +1,20 @@
-import {setAuthChecked, setUser} from "./user";
+import { setUser } from "./user";
+import { api } from "../utils/api";
 
 export const getUser = () => {
-    return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve();
-            }, 1000);
-        }).then(() => {
-                dispatch(setUser({}));
-            }
-        );
-    };
+  return (dispatch) => {
+    return api.getUser().then((res) => {
+      dispatch(setUser(res.user));
+    });
+  };
 };
 
 export const login = () => {
-    return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve();
-            }, 1000);
-        }).then(() => {
-                localStorage.setItem("accessToken", "test-token");
-                dispatch(setUser({}));
-                dispatch(setAuthChecked(true));
-            }
-        );
-    }
-}
+  return (dispatch) => {
+    return api.login().then((res) => {
+      localStorage.setItem("accessToken", res.accessToken);
+      localStorage.setItem("refreshToken", res.refreshToken);
+      dispatch(setUser(res.user));
+    });
+  };
+};
