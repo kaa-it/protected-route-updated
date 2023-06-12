@@ -5,6 +5,7 @@ import {Profile} from "../pages/profile";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { checkUserAuth } from "../services/action";
+import { OnlyAuth, OnlyUnAuth } from "./protected-route";
 
 function App() {
     const dispatch = useDispatch();
@@ -14,13 +15,13 @@ function App() {
     }, []);
 
     return (
-        <div className="app">
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/profile" element={<Profile/>}/>
-            </Routes>
-        </div>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<OnlyUnAuth component={<Login/>} />} />
+          <Route path="/profile" element={<OnlyAuth component={<Profile/>} />} />
+        </Routes>
+      </div>
     );
 }
 

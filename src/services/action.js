@@ -35,3 +35,14 @@ export const checkUserAuth = () => {
         }
     };
 };
+
+
+export const logout = () => {
+  return (dispatch) => {
+    return api.logout().then(() => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      dispatch(setUser(null));
+    });
+  };
+};
