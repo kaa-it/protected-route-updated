@@ -1,5 +1,17 @@
-import { setUser, setAuthChecked } from "./user";
 import { api } from "../utils/api";
+
+export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
+export const SET_USER = "SET_USER";
+
+export const setAuthChecked = (value) => ({
+  type: SET_AUTH_CHECKED,
+  payload: value,
+});
+
+export const setUser = (user) => ({
+  type: SET_USER,
+  payload: user,
+});
 
 export const getUser = () => {
   return (dispatch) => {
@@ -27,7 +39,7 @@ export const checkUserAuth = () => {
               .catch(() => {
                   localStorage.removeItem("accessToken");
                   localStorage.removeItem("refreshToken");
-                  dispatch(setUser({}));
+                  dispatch(setUser(null));
                })
               .finally(() => dispatch(setAuthChecked(true)));
         } else {
