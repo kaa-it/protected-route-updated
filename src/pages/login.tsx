@@ -1,4 +1,4 @@
-import {useDispatch} from "react-redux";
+import {useDispatch} from  "../services/store";
 import {login} from "../services/action";
 
 export const Login = () => {

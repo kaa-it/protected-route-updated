@@ -1,7 +1,9 @@
 // В проектной работе эта функция будет обращаться к серверу
 // и обновлять токены если они уже устарели.
-const getUser = () =>
-  new Promise((resolve, reject) => {
+import {TLoginResponse, TUserResponse} from "../types";
+
+const getUser = (): Promise<TUserResponse> =>
+  new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         user: {},
@@ -9,8 +11,8 @@ const getUser = () =>
     }, 1000);
   });
 
-const login = () =>
-  new Promise((resolve, reject) => {
+const login = (): Promise<TLoginResponse> =>
+  new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         accessToken: "test-token",
@@ -20,8 +22,8 @@ const login = () =>
     }, 1000);
   });
 
-const logout = () =>
-  new Promise((resolve, reject) => {
+const logout = (): Promise<void> =>
+  new Promise((resolve) => {
     setTimeout(() => {
       resolve();
     }, 1000);

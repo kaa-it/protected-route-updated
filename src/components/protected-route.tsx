@@ -1,7 +1,12 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../services/store";
 import { Navigate, useLocation } from "react-router-dom";
 
-const Protected = ({ onlyUnAuth = false, component }) => {
+type TProtectedProps = {
+  onlyUnAuth?: boolean;
+  component: JSX.Element
+}
+
+const Protected = ({ onlyUnAuth = false, component }: TProtectedProps): JSX.Element  => {
   // isAuthChecked это флаг, показывающий что проверка токена произведена
   // при этом результат этой проверки не имеет значения, важно только,
   // что сам факт проверки имел место.
@@ -13,7 +18,9 @@ const Protected = ({ onlyUnAuth = false, component }) => {
     // Запрос еще выполняется
     // Выводим прелоадер в ПР
     // Здесь возвращается просто null для экономии времени
-    return null;
+    return (
+      <p>Загрузка...</p>
+    );
   }
 
   if (onlyUnAuth && user) {
@@ -33,6 +40,6 @@ const Protected = ({ onlyUnAuth = false, component }) => {
 };
 
 export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ component }) => (
+export const OnlyUnAuth = ({ component }: { component: JSX.Element }) => (
   <Protected onlyUnAuth={true} component={component} />
 );

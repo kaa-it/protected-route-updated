@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../services/store";
 import { logout } from "../services/action";
 
 export const Profile = () => {

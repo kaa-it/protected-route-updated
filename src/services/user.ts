@@ -1,7 +1,13 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {login, logout} from "./action";
+import {TUser} from "../types";
 
-const initialState = {
+type TUserState = {
+    user: TUser | null;
+    isAuthChecked: boolean;
+}
+
+const initialState: TUserState = {
     user: null,
     isAuthChecked: false,
 };
@@ -10,10 +16,10 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setAuthChecked: (state, action) => {
+    setAuthChecked: (state, action: PayloadAction<boolean>) => {
       state.isAuthChecked = action.payload;
     },
-    setUser: (state, action) => {
+    setUser: (state, action: PayloadAction<TUser>) => {
       state.user = action.payload;
     },
   },
