@@ -20,21 +20,21 @@ export const login = createAsyncThunk(
     }
 );
 
-export const checkUserAuth = () => {
-    return (dispatch) => {
+export const checkUserAuth = createAsyncThunk(
+    "user/checkAuth",
+    async (_, {dispatch}) => {
         if (localStorage.getItem("accessToken")) {
             dispatch(getUser())
                 .catch(() => {
                     localStorage.removeItem("accessToken");
                     localStorage.removeItem("refreshToken");
-                    dispatch(setUser(null));
                 })
                 .finally(() => dispatch(setAuthChecked(true)));
         } else {
             dispatch(setAuthChecked(true));
         }
-    };
-};
+    }
+)
 
 
 export const logout = createAsyncThunk(
