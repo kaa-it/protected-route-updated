@@ -3,14 +3,6 @@ import {setUser, setAuthChecked} from "./user";
 import {api} from "../utils/api";
 import {AppDispatch} from "./store";
 
-export const getUser = () => {
-    return (dispatch: AppDispatch) => {
-        return api.getUser().then((res) => {
-            dispatch(setUser(res.user));
-        });
-    };
-};
-
 export const login = createAsyncThunk(
     "user/login",
     async () => {
@@ -25,7 +17,8 @@ export const checkUserAuth = createAsyncThunk<void, void, { dispatch: AppDispatc
   "user/checkAuth",
   async (_, { dispatch }) => {
     if (localStorage.getItem("accessToken")) {
-      dispatch(getUser())
+      api.getUser()
+        .then(res => dispatch(setUser(res.user)))
         .catch(() => {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
