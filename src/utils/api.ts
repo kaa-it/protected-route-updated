@@ -1,7 +1,7 @@
-// В проектной работе эта функция будет обращаться к серверу
-// и обновлять токены если они уже устарели.
 import {TLoginResponse, TUserResponse} from "../types";
 
+// В проектной работе эта функция будет обращаться к серверу
+// и обновлять токены если они уже устарели.
 const getUser = (): Promise<TUserResponse> =>
   new Promise((resolve) => {
     setTimeout(() => {
