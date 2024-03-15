@@ -2,14 +2,6 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {setUser, setAuthChecked} from "./user";
 import {api} from "../utils/api";
 
-export const getUser = () => {
-    return (dispatch) => {
-        return api.getUser().then((res) => {
-            dispatch(setUser(res.user));
-        });
-    };
-};
-
 export const login = createAsyncThunk(
     "user/login",
     async () => {
@@ -24,7 +16,8 @@ export const checkUserAuth = createAsyncThunk(
     "user/checkAuth",
     async (_, {dispatch}) => {
         if (localStorage.getItem("accessToken")) {
-            dispatch(getUser())
+            api.getUser()
+                .then(res => dispatch(setUser(res.user)))
                 .catch(() => {
                     localStorage.removeItem("accessToken");
                     localStorage.removeItem("refreshToken");
