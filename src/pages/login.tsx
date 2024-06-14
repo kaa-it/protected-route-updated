@@ -1,7 +1,11 @@
+import {useDispatch} from  "../services/store";
+import {login} from "../services/user/action";
+
 export const Login = () => {
+    const dispatch = useDispatch();
 
     const onClick = () => {
-
+        dispatch(login());
     }
 
     return (
