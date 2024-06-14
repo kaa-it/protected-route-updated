@@ -1,17 +1,14 @@
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "../services/store";
-import {logout} from "../services/user/action";
 
 export const Profile = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const onClick = () => {
         navigate("/");
     };
 
     const onLogout = () => {
-        dispatch(logout());
+
     }
 
     return (
