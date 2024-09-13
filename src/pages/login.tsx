@@ -1,6 +1,11 @@
-export const Login = () => {
-    const onClick = () => {
+import {useDispatch} from "../services/store.ts";
+import {login} from "../services/auth/actions.ts";
 
+export const Login = () => {
+    const dispatch = useDispatch();
+
+    const onClick = () => {
+        dispatch(login());
     }
 
     return (
