@@ -13,19 +13,9 @@ export const setUser = (user) => ({
   payload: user,
 });
 
-export const getUser = () => {
-  return (dispatch) => {
-    return api.getUser().then((res) => {
-      dispatch(setUser(res.user));
-    });
-  };
-};
-
 export const login = () => {
   return (dispatch) => {
     return api.login().then((res) => {
-      localStorage.setItem("accessToken", res.accessToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
       dispatch(setUser(res.user));
       dispatch(setAuthChecked(true));
     });
@@ -35,12 +25,8 @@ export const login = () => {
 export const checkUserAuth = () => {
     return (dispatch) => {
         if (localStorage.getItem("accessToken")) {
-            dispatch(getUser())
-              .catch(() => {
-                  localStorage.removeItem("accessToken");
-                  localStorage.removeItem("refreshToken");
-                  dispatch(setUser(null));
-               })
+            api.getUser()
+              .then(res => dispatch(res.user))
               .finally(() => dispatch(setAuthChecked(true)));
         } else {
             dispatch(setAuthChecked(true));
@@ -52,8 +38,6 @@ export const checkUserAuth = () => {
 export const logout = () => {
   return (dispatch) => {
     return api.logout().then(() => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
       dispatch(setUser(null));
     });
   };

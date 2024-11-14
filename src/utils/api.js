@@ -1,7 +1,7 @@
 // В проектной работе эта функция будет обращаться к серверу
 // и обновлять токены если они уже устарели.
-const getUser = () =>
-  new Promise((resolve, reject) => {
+const getUser = async () => {
+  const result = new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({
         user: {},
@@ -9,12 +9,21 @@ const getUser = () =>
     }, 1000);
   });
 
+  try {
+    return await result;
+  } catch (error) {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    throw error;
+  }
+}
+
 const login = () =>
   new Promise((resolve, reject) => {
     setTimeout(() => {
+      localStorage.setItem("accessToken", "test-token");
+      localStorage.setItem("refreshToken", "test-refresh-token");
       resolve({
-        accessToken: "test-token",
-        refreshToken: "test-refresh-token",
         user: {},
       });
     }, 1000);
@@ -23,6 +32,8 @@ const login = () =>
 const logout = () =>
   new Promise((resolve, reject) => {
     setTimeout(() => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       resolve();
     }, 1000);
   });  
