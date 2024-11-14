@@ -6,8 +6,6 @@ export const login = createAsyncThunk(
     "user/login",
     async () => {
         const res = await api.login();
-        localStorage.setItem("accessToken", res.accessToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
         return res.user;
     }
 );
@@ -18,10 +16,6 @@ export const checkUserAuth = createAsyncThunk(
         if (localStorage.getItem("accessToken")) {
             api.getUser()
                 .then(res => dispatch(setUser(res.user)))
-                .catch(() => {
-                    localStorage.removeItem("accessToken");
-                    localStorage.removeItem("refreshToken");
-                })
                 .finally(() => dispatch(setAuthChecked(true)));
         } else {
             dispatch(setAuthChecked(true));
@@ -33,8 +27,6 @@ export const checkUserAuth = createAsyncThunk(
 export const logout = createAsyncThunk(
     "user/logout",
     async () => {
-        await api.logout();
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        return api.logout();
     }
 );
