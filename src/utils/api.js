@@ -38,8 +38,11 @@ const logout = () =>
     }, 1000);
   });
 
+const isTokenExists = () => localStorage.getItem("accessToken");
+
 export const api = {
   getUser,
   login,
-  logout
+  logout,
+  isTokenExists,
 };
