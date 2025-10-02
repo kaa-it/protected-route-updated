@@ -1,17 +1,18 @@
-import {useDispatch} from "react-redux";
-import {login} from "../services/action";
+import { useDispatch } from 'react-redux';
+
+import { login } from '@services/user/actions.js';
 
 export const Login = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const onClick = () => {
-        dispatch(login());
-    }
+  const onClick = () => {
+    dispatch(login());
+  };
 
-    return (
-        <div className="page">
-            <h1 className="title">Логин</h1>
-            <button className="button" onClick={onClick}>Войти</button>
-        </div>
-    )
-}
+  return (
+    <main className="card">
+      <h1>Логин</h1>
+      <button onClick={onClick}>Войти</button>
+    </main>
+  );
+};
