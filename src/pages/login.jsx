@@ -12,7 +12,9 @@ export const Login = () => {
   return (
     <main className="card">
       <h1>Логин</h1>
-      <button onClick={onClick}>Войти</button>
+      <button className="success" onClick={onClick}>
+        Войти
+      </button>
     </main>
   );
 };

@@ -18,8 +18,12 @@ export const Profile = () => {
   return (
     <main className="card">
       <h1>Личный кабинет</h1>
-      <button onClick={onClick}>На главную</button>
-      <button onClick={onLogout}>Выход</button>
+      <button className="primary" onClick={onClick}>
+        На главную
+      </button>
+      <button className="cancel" onClick={onLogout}>
+        Выход
+      </button>
     </main>
   );
 };

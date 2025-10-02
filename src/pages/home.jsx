@@ -10,7 +10,9 @@ export const Home = () => {
   return (
     <main className="card">
       <h1>Главная</h1>
-      <button onClick={onClick}>Личный кабинет</button>
+      <button className="primary" onClick={onClick}>
+        Личный кабинет
+      </button>
     </main>
   );
 };
