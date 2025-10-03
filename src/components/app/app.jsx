@@ -7,7 +7,7 @@ import { Login } from '@pages/login.jsx';
 import { Profile } from '@pages/profile.jsx';
 import { checkUserAuth } from '@services/user/actions.js';
 
-import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route.jsx';
+import { Protected } from '../protected-route/protected-route.jsx';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -19,8 +19,8 @@ export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
-      <Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
+      <Route path="/login" element={<Protected onlyUnAuth component={<Login />} />} />
+      <Route path="/profile" element={<Protected component={<Profile />} />} />
     </Routes>
   );
 };
