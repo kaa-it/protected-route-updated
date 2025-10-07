@@ -54,3 +54,7 @@ export async function fetchWithRefresh(endpoint, options) {
     }
   }
 }
+
+export function isTokenExists() {
+  return !!Cookies.get('accessToken');
+}

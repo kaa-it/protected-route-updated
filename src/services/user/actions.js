@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
 
 import { api } from '@utils/api.js';
+import { isTokenExists } from '@utils/tokens.js';
 
 import { setUser, setAuthChecked } from './slice.js';
 
@@ -19,13 +19,10 @@ export const checkUserAuth = createAsyncThunk(
   'user/checkAuth',
   async (_, { dispatch }) => {
     try {
-      if (Cookies.get('accessToken')) {
+      if (isTokenExists()) {
         const response = await api.getUser();
         dispatch(setUser(response.user));
       }
-    } catch {
-      // Очищаем невалидный токен при ошибке
-      Cookies.delete('accessToken');
     } finally {
       dispatch(setAuthChecked(true));
     }
