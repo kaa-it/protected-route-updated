@@ -4,8 +4,13 @@ import { api } from '@utils/api.js';
 
 import { setUser, setAuthChecked } from './slice.js';
 
-export const login = createAsyncThunk('user/login', async () => {
-  const res = await api.login();
+export const register = createAsyncThunk('user/register', async (formData) => {
+  const res = await api.register(formData);
+  return res;
+});
+
+export const login = createAsyncThunk('user/login', async (formData) => {
+  const res = await api.login(formData);
   return res.user;
 });
 

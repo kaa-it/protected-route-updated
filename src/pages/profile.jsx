@@ -1,29 +1,29 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { logout } from '@services/user/actions.js';
+import { logout } from '@services/user/';
 
 export const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onClick = () => {
+  const handleClick = () => {
     navigate('/');
   };
 
-  const onLogout = () => {
+  const handleLogout = () => {
     dispatch(logout());
   };
 
   return (
-    <main className="card">
+    <>
       <h1>Личный кабинет</h1>
-      <button className="primary" onClick={onClick}>
+      <button className="primary" onClick={handleClick}>
         На главную
       </button>
-      <button className="cancel" onClick={onLogout}>
+      <button className="cancel" onClick={handleLogout}>
         Выход
       </button>
-    </main>
+    </>
   );
 };

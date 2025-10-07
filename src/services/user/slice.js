@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { login, logout } from './actions.js';
+import { login, logout, register } from './actions.js';
 
 const initialState = {
   user: null,
   isAuthChecked: false,
+  isLoading: false,
+  error: null,
 };
 
 export const userSlice = createSlice({
@@ -12,6 +14,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setAuthChecked: (state, action) => {
+      state.isLoading = false;
       state.isAuthChecked = action.payload;
     },
     setUser: (state, action) => {
@@ -20,16 +23,43 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.isAuthChecked = true;
+        state.error = null;
+      })
       .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.user = action.payload;
         state.isAuthChecked = true;
+        state.error = null;
       })
       .addCase(logout.fulfilled, (state) => {
+        state.isLoading = false;
         state.user = null;
-      });
+        state.error = null;
+      })
+      .addMatcher(
+        (action) => action.type.endsWith('/pending'),
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith('/rejected'),
+        (state, action) => {
+          state.isLoading = false;
+          state.error = action.error.message;
+        }
+      );
   },
 });
 
 export const { setAuthChecked, setUser } = userSlice.actions;
 
-export default userSlice.reducer;
+export const selectIsLoading = (state) => state.user.isLoading;
+export const selectError = (state) => state.user.error;
+export const selectUser = (state) => state.user.user;
+export const selectAuthChecked = (state) => state.user.isAuthChecked;

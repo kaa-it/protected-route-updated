@@ -8,11 +8,11 @@ export const Home = () => {
   };
 
   return (
-    <main className="card">
+    <>
       <h1>Главная</h1>
       <button className="primary" onClick={onClick}>
         Личный кабинет
       </button>
-    </main>
+    </>
   );
 };

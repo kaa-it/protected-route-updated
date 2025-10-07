@@ -45,7 +45,7 @@ p {
 
 a {
   color: #0d6efd;
-  text-decoration: underline;
+  text-decoration: none;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.25em;
   transition:
@@ -154,7 +154,7 @@ button.primary:disabled {
 form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   row-gap: 0.75rem;
   inline-size: inherit;
   padding: 1.5rem;
@@ -169,7 +169,8 @@ fieldset {
 }
 
 label {
-  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
   vertical-align: middle;
 }
 
@@ -188,7 +189,7 @@ input:not([type='range']) {
 
 input:not([type='checkbox']),
 input:not([type='radio']) {
-  inline-size: 12.5rem;
+  min-inline-size: 12.5rem;
 }
 
 input::placeholder {
@@ -302,6 +303,14 @@ ul {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* ===== Ошибки ===== */
+
+.error {
+  min-block-size: 1.5rem;
+  margin-block-start: 1rem;
+  color: #bb2d3b;
 }
 
 /* ===== УТИЛИТЫ ===== */

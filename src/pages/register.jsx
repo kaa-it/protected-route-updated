@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 import { Input } from '@components/input/input.jsx';
 import { useFormWithValidation } from '@hooks/useFormWithValidation';
-import { selectError, selectIsLoading, login } from '@services/user';
+import { selectError, selectIsLoading, register } from '@services/user';
 
-export const Login = () => {
+export const Register = () => {
   const inputRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -20,13 +20,13 @@ export const Login = () => {
   }, []);
 
   const { values, handleChange, errors, isValid } = useFormWithValidation({
+    name: '',
     email: '',
     password: '',
   });
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(login(values));
+    dispatch(register(values));
   };
 
   return (
@@ -34,6 +34,16 @@ export const Login = () => {
       <h3>Вход</h3>
       <Input
         inputRef={inputRef}
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Имя"
+        value={values.name || ''}
+        error={errors.name}
+        onChange={handleChange}
+        aria-invalid={!!errors.email}
+      />
+      <Input
         type="email"
         name="email"
         id="email"
@@ -54,12 +64,12 @@ export const Login = () => {
         aria-invalid={!!errors.password}
       />
       <button type="submit" disabled={isLoading || !isValid}>
-        {isLoading ? 'Вход...' : 'Войти'}
+        {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
       </button>
       {error && <span className="error">{`Ошибка: ${error}`}</span>}
       <span>
         Вы - новый пользователь?&nbsp;
-        <Link to={'/register'}>Зарегистрироваться</Link>
+        <Link to={'/login'}>Войти</Link>
       </span>
     </form>
   );
