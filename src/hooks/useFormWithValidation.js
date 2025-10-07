@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { formValidators } from '@utils/formValidators.js';
+import { validators } from '@utils/validators.js';
 
 export function useFormWithValidation(initialValues = {}) {
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState(initError(initialValues));
+  const [errors, setErrors] = useState(initErrors(initialValues));
   const [isValid, setIsValid] = useState(false);
 
   function handleChange(event) {
@@ -18,28 +18,25 @@ export function useFormWithValidation(initialValues = {}) {
     };
     setValues(newValues);
 
-    const fieldIsValid = formValidators[name]?.validator(value) ?? true;
+    const fieldIsValid = validators[name]?.validator(value) ?? true;
 
     const newErrors = {
       ...errors,
-      [name]: !fieldIsValid ? formValidators[name]?.message : '',
+      [name]: !fieldIsValid ? validators[name]?.message : '',
     };
     setErrors(newErrors);
 
-    // Проверяем валидность ВСЕХ полей формы
-    const formIsValid = Object.keys(newValues).every((fieldName) => {
-      const validator = formValidators[fieldName]?.validator;
-      return validator ? validator(newValues[fieldName]) : true;
-    });
-    setIsValid(formIsValid);
+    const formIsNotValid = Object.values(newErrors).some(x => x !== '');
+
+    setIsValid(!formIsNotValid);
   }
 
   return { values, handleChange, errors, isValid };
 }
 
-function initError(formValues) {
-  return Object.keys(formValues).reduce((errorObject, fieldName) => {
-    errorObject[fieldName] = '';
-    return errorObject;
+function initErrors(formValues) {
+  return Object.keys(formValues).reduce((errors, fieldName) => {
+    errors[fieldName] = '';
+    return errors;
   }, {});
 }

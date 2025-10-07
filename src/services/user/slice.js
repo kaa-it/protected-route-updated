@@ -25,7 +25,7 @@ export const userSlice = createSlice({
     builder
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.isAuthChecked = true;
         state.error = null;
       })

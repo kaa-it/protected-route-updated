@@ -6,7 +6,7 @@ import { setUser, setAuthChecked } from './slice.js';
 
 export const register = createAsyncThunk('user/register', async (formData) => {
   const res = await api.register(formData);
-  return res;
+  return res.user;
 });
 
 export const login = createAsyncThunk('user/login', async (formData) => {
