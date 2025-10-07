@@ -26,7 +26,7 @@ export function useFormWithValidation(initialValues = {}) {
     };
     setErrors(newErrors);
 
-    const formIsNotValid = Object.values(newErrors).some(x => x !== '');
+    const formIsNotValid = Object.values(newErrors).some((x) => x !== '');
 
     setIsValid(!formIsNotValid);
   }

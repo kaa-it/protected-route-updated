@@ -57,8 +57,8 @@ export const Login = () => {
         {isLoading ? 'Вход...' : 'Войти'}
       </button>
       {error && <span className="error">{`Ошибка: ${error}`}</span>}
+      <span>Вы - новый пользователь?&nbsp;</span>
       <span>
-        Вы - новый пользователь?&nbsp;
         <Link to={'/register'}>Зарегистрироваться</Link>
       </span>
     </form>

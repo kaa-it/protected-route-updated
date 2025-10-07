@@ -1,63 +1,43 @@
-import {defaultOptions} from "@utils/constants.js";
-import {fetchWithRefresh, request} from "@utils/tokens.js";
+import Cookies from 'js-cookie';
 
-export function register(formData) {
-  const options = {
-    ...defaultOptions,
-    body: JSON.stringify(formData),
-  };
+import { fetchWithRefresh, request } from '@utils/tokens.js';
 
-  return request('auth/register', options).then((response) => {
-    if (!response.success) {
-      return Promise.reject(response);
-    }
+export async function register(formData) {
+  const response = await request('auth/register', { body: JSON.stringify(formData) });
 
-    return response;
-  });
+  Cookies.set('accessToken', response.accessToken);
+  localStorage.setItem('refreshToken', response.refreshToken);
+
+  return response;
 }
 
-export function login(formData) {
-  const options = {
-    ...defaultOptions,
-    body: JSON.stringify(formData),
-  };
+export async function login(formData) {
+  const response = await request('auth/login', { body: JSON.stringify(formData) });
 
-  return request('auth/login', options).then((response) => {
-    if (!response.success) {
-      return Promise.reject(response);
-    }
+  Cookies.set('accessToken', response.accessToken);
+  localStorage.setItem('refreshToken', response.refreshToken);
 
-    localStorage.setItem('accessToken', response.accessToken);
-    localStorage.setItem('refreshToken', response.refreshToken);
-
-    return response;
-  });
+  return response;
 }
 
 async function getUser() {
   //  Использование функции fetchWithRefresh
-  return fetchWithRefresh('auth/user', {
+  return await fetchWithRefresh('auth/user', {
     headers: {
-      authorization: localStorage.getItem('accessToken'),
+      authorization: Cookies.get('accessToken'),
     },
   });
 }
 
-export function logout() {
-  const options = {
-    ...defaultOptions,
+export async function logout() {
+  const response = await request('auth/logout', {
     body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
-  };
-
-  return request('auth/logout', options).then((response) => {
-    if (!response.success) {
-      return Promise.reject(response);
-    }
-
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    return response;
   });
+
+  Cookies.remove('accessToken');
+  localStorage.removeItem('refreshToken');
+
+  return response;
 }
 
 export const api = {

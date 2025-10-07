@@ -1,7 +1,7 @@
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import {logout, selectIsLoading} from '@services/user/';
+import { logout, selectIsLoading } from '@services/user/';
 
 export const Profile = () => {
   const navigate = useNavigate();

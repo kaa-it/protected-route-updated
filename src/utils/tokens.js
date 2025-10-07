@@ -1,36 +1,35 @@
-// Вспомогательная функция для обработки полученного ответа с сервера
-import {defaultOptions, host} from "@utils/constants.js";
+import Cookies from 'js-cookie';
 
-export function checkResponse(res) {
-  return res.ok
-    ? res.json()
-    : res.json().then((error) => Promise.reject({ ...error, statusCode: res.status }));
+// Вспомогательная функция для обработки полученного ответа с сервера
+import { defaultOptions, host } from '@utils/constants.js';
+
+export function checkResponse(response) {
+  if (response.ok) {
+    return response.json();
+  }
+
+  throw response;
 }
 
 // Метод отправки запроса без обновления токена
 export async function request(endpoint, options) {
-  try {
-    const res = await fetch(`${host}/api/${endpoint}`, options);
-    return await checkResponse(res);
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  const response = await fetch(`${host}/api/${endpoint}`, {
+    ...defaultOptions,
+    ...options,
+  });
+  return await checkResponse(response);
 }
 
 // Метод обновления access-токена
-export function refreshToken() {
-  return request('auth/token', {
-    ...defaultOptions,
+export async function refreshToken() {
+  const refreshData = await request('auth/token', {
     body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
-  }).then((refreshData) => {
-    if (!refreshData.success) {
-      return Promise.reject(refreshData);
-    }
-
-    localStorage.setItem('refreshToken', refreshData.refreshToken);
-    localStorage.setItem('accessToken', refreshData.accessToken);
-    return refreshData;
   });
+
+  Cookies.set('accessToken', refreshData.accessToken);
+  localStorage.setItem('refreshToken', refreshData.refreshToken);
+
+  return refreshData;
 }
 
 export async function fetchWithRefresh(endpoint, options) {
