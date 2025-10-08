@@ -21,13 +21,20 @@ async function login(formData) {
 }
 
 async function getUser() {
-  //  Использование функции fetchWithRefresh
-  return await fetchWithRefresh('auth/user', {
-    method: 'GET',
-    headers: {
-      authorization: Cookies.get('accessToken'),
-    },
-  });
+  try {
+    //  Использование функции fetchWithRefresh
+    return await fetchWithRefresh('auth/user', {
+      method: 'GET',
+      headers: {
+        authorization: Cookies.get('accessToken'),
+      },
+    });
+  } catch (error) {
+    Cookies.remove('accessToken');
+    localStorage.removeItem('refreshToken');
+
+    throw error;
+  }
 }
 
 async function logout() {
