@@ -16,7 +16,7 @@ export const login = createAsyncThunk('user/login', async (formData) => {
 });
 
 export const checkUserAuth = createAsyncThunk(
-  'user/checkAuth',
+  'user/checkUserAuth',
   async (_, { dispatch }) => {
     try {
       if (isTokenExists()) {
@@ -30,5 +30,5 @@ export const checkUserAuth = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk('user/logout', async () => {
-  return await api.logout();
+  await api.logout();
 });

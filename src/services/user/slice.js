@@ -14,7 +14,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setAuthChecked: (state, action) => {
-      state.isLoading = false;
       state.isAuthChecked = action.payload;
     },
     setUser: (state, action) => {
@@ -41,17 +40,19 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addMatcher(
-        (action) => action.type.endsWith('/pending'),
+        (action) =>
+          action.type.endsWith('/pending') && !action.type.includes('checkUserAuth'),
         (state) => {
           state.isLoading = true;
           state.error = null;
         }
       )
       .addMatcher(
-        (action) => action.type.endsWith('/rejected'),
+        (action) =>
+          action.type.endsWith('/rejected') && !action.type.includes('checkUserAuth'),
         (state, action) => {
           state.isLoading = false;
-          state.error = action.error.message;
+          state.error = action.error?.message;
         }
       );
   },
