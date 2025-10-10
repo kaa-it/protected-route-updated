@@ -68,7 +68,7 @@ export const Register = () => {
       </button>
       {error && <span className="error">{`Ошибка: ${error}`}</span>}
       <span>
-        Вы - новый пользователь?&nbsp;
+        Уже есть аккаунт?&nbsp;
         <Link to={'/login'}>Войти</Link>
       </span>
     </form>

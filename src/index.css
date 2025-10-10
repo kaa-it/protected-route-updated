@@ -41,16 +41,21 @@ p {
   padding: 0;
 }
 
+h3 {
+  margin-block-end: 1rem;
+}
+
 /* ===== ССЫЛКИ ===== */
 
 a {
   color: #0d6efd;
+    font-size: 0.75rem;
   text-decoration: none;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.25em;
   transition:
     color 0.15s ease-in-out,
     text-decoration-color 0.15s ease-in-out;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
 }
 
 a:hover {
@@ -155,7 +160,6 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 0.75rem;
   inline-size: inherit;
   padding: 1.5rem;
 }
@@ -227,8 +231,12 @@ form:last-child {
   row-gap: 0;
 }
 
-form span:last-child {
-  margin-block-start: 0;
+form > span:last-of-type {
+  max-inline-size: 13.5rem;
+  margin-block-start: 0.5rem;
+  font-size: 0.75rem;
+  text-align: center;
+  overflow-wrap: normal;
 }
 
 textarea {
@@ -342,4 +350,8 @@ ul {
   overflow: hidden;
   white-space: nowrap;
   clip-path: inset(50%);
+}
+
+.success {
+  color: #198754;
 }

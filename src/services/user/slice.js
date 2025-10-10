@@ -20,6 +20,11 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
   },
+  selectors: {
+    selectIsLoading: (state) => state.isLoading,
+    selectError: (state) => state.error,
+    selectUser: (state) => state.user,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.fulfilled, (state, action) => {
@@ -59,8 +64,5 @@ export const userSlice = createSlice({
 });
 
 export const { setAuthChecked, setUser } = userSlice.actions;
-
-export const selectIsLoading = (state) => state.user.isLoading;
-export const selectError = (state) => state.user.error;
-export const selectUser = (state) => state.user.user;
+export const { selectIsLoading, selectError, selectUser } = userSlice.selectors;
 export const selectAuthChecked = (state) => state.user.isAuthChecked;
