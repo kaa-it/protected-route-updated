@@ -20,7 +20,7 @@ export async function checkResponse(response) {
     return res;
   }
 
-  throw new ServerError(res.message, res.status);
+  throw new ServerError(res.message, response.status);
 }
 
 // Функция отправки запроса без обновления токена
