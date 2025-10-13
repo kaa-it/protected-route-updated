@@ -21,6 +21,7 @@ export const userSlice = createSlice({
     },
   },
   selectors: {
+    selectAuthChecked: (state) => state.isAuthChecked,
     selectIsLoading: (state) => state.isLoading,
     selectError: (state) => state.error,
     selectUser: (state) => state.user,
@@ -64,5 +65,5 @@ export const userSlice = createSlice({
 });
 
 export const { setAuthChecked, setUser } = userSlice.actions;
-export const { selectIsLoading, selectError, selectUser } = userSlice.selectors;
-export const selectAuthChecked = (state) => state.user.isAuthChecked;
+export const { selectAuthChecked, selectIsLoading, selectError, selectUser } =
+  userSlice.selectors;
